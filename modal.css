@@ -1,0 +1,29 @@
+.modal-container
+{
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	background-color: #0005;
+}
+
+.modal-content
+{
+	width: 512px;
+	margin: auto;
+
+	display: flex;
+	flex-direction: column;
+
+	background-color: #FFF;
+}
+
+@media (max-width: 512px)
+{
+	.modal-content { width: 75%; }
+}

@@ -1,0 +1,164 @@
+.no-select
+{
+	pointer-events: none !important;
+}
+
+.btn
+{
+	--button-fg: #000;
+	--button-bg: #CCC;
+	--button-bg-hover: #EEE;
+	--button-bg-click: #BBB;
+
+	padding: 0.3em 0.4em;
+	pointer-events: initial;
+
+	color: var(--button-fg);
+	background-color: var(--button-bg);
+	border: 1px outset var(--button-bg);
+	border-radius: 4px;
+
+	user-select: none;
+}
+
+.btn-text
+{
+	--button-fg: #000;
+	--button-bg: #EEE;
+	--button-bg-hover: #EEE;
+	--button-bg-click: #DDD;
+
+	border-width: 2px;
+	border-style: inset;
+
+	resize: none;
+}
+
+.btn:hover:not(.no-select)
+{
+	background-color: var(--button-bg-hover);
+	border-color: var(--button-bg-hover);
+}
+
+.btn:active:not(.no-select)
+{
+	border-style: inset;
+	background-color: var(--button-bg-click);
+	border-color: var(--button-bg-click);
+}
+
+.btn-blue
+{
+	--button-fg: #FFF;
+	--button-bg: #47F;
+	--button-bg-hover: #69F;
+	--button-bg-click: #47F;
+}
+
+.btn-pink
+{
+	--button-fg: #FFF;
+	--button-bg: #F0F;
+	--button-bg-hover: #F2F;
+	--button-bg-click: #E0E;
+}
+
+.btn-red
+{
+	--button-fg: #FFF;
+	--button-bg: #F02;
+	--button-bg-hover: #F04;
+	--button-bg-click: #D04;
+}
+
+.btn-orange
+{
+	--button-fg: #FFF;
+	--button-bg: #F92;
+	--button-bg-hover: #FA4;
+	--button-bg-click: #F90;
+}
+
+.btn-yellow
+{
+	--button-fg: #000;
+	--button-bg: #FF0;
+	--button-bg-hover: #FF4;
+	--button-bg-click: #EE2;
+}
+
+.btn-green
+{
+	--button-fg: #000;
+	--button-bg: #4F4;
+	--button-bg-hover: #5F5;
+	--button-bg-click: #4E4;
+}
+
+.btn-cyan
+{
+	--button-fg: #000;
+	--button-bg: #1EF;
+	--button-bg-hover: #2FF;
+	--button-bg-click: #0EE;
+}
+
+.btn-dark
+{
+	--button-fg: #FFF;
+	--button-bg: #444;
+	--button-bg-hover: #555;
+	--button-bg-click: #333;
+}
+
+.check
+{
+	--button-fg: #FFF;
+	--button-bg: #FFF;
+	--button-bg-hover: #69F;
+	--button-bg-click: #47F;
+
+	pointer-events: initial;
+
+	appearance: none;
+	font: inherit;
+
+	color: var(--button-fg);
+	background-color: var(--button-bg);
+
+	width: 0.8em;
+	height: 0.8em;
+	padding: 0;
+
+	border: 1px outset var(--button-bg);
+	border-radius: 2px;
+}
+
+.check:hover
+{
+	background-color: var(--button-bg-hover);
+	border-color: var(--button-bg-hover);
+}
+
+.check:active
+{
+	border-style: inset;
+	background-color: var(--button-bg-click);
+	border-color: var(--button-bg-click);
+}
+
+.check:checked
+{
+	background-color: var(--button-bg-click);
+	border-color: var(--button-bg-click);
+}
+
+.check:checked::after
+{
+	position: relative;
+	left: 10%;
+	bottom: 40%;
+
+	content: "x";
+	font-weight: bold;
+}

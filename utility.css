@@ -1,0 +1,138 @@
+.hidden
+{
+	display: none !important;
+}
+
+/* Font */
+
+.fw-thin   { font-weight: lighter; }
+.fw-normal { font-weight: normal;  }
+.fw-bold   { font-weight: bold;    }
+.fw-bolder { font-weight: bolder;  }
+
+.fs-10 { font-size: 10px; }
+.fs-12 { font-size: 12px; }
+.fs-14 { font-size: 14px; }
+.fs-16 { font-size: 16px; }
+.fs-18 { font-size: 18px; }
+
+.td-none { text-decoration: none; }
+
+.td-over  { text-decoration: overline; }
+.td-under { text-decoration: underline; }
+.td-thru  { text-decoration: line-through; }
+
+.td-over-under { text-decoration: overline underline;              }
+.td-over-thru  { text-decoration: overline line-through;           }
+.td-thru-under { text-decoration: line-through underline;          }
+.td-all        { text-decoration: overline line-through underline; }
+
+.tds-dash   { text-decoration-style: dashed; }
+.tds-dot    { text-decoration-style: dotted; }
+.tds-double { text-decoration-style: double; }
+.tds-solid  { text-decoration-style: solid;  }
+.tds-wavy   { text-decoration-style: wavy;   }
+
+/* Margin */
+
+.m-0 { margin: 0;      }
+.m-1 { margin: 0.25em; }
+.m-2 { margin: 0.5em;  }
+.m-3 { margin: 0.75em; }
+
+.mt-0 { margin-top: 0;      }
+.mt-1 { margin-top: 0.25em; }
+.mt-2 { margin-top: 0.5em;  }
+.mt-3 { margin-top: 0.75em; }
+
+.mb-0 { margin-bottom: 0;      }
+.mb-1 { margin-bottom: 0.25em; }
+.mb-2 { margin-bottom: 0.5em;  }
+.mb-3 { margin-bottom: 0.75em; }
+
+.my-0 { margin-top: 0;      margin-bottom: 0;      }
+.my-1 { margin-top: 0.25em; margin-bottom: 0.25em; }
+.my-2 { margin-top: 0.5em;  margin-bottom: 0.5em;  }
+.my-3 { margin-top: 0.75em; margin-bottom: 0.75em; }
+
+.ml-0 { margin-left: 0;      }
+.ml-1 { margin-left: 0.25em; }
+.ml-2 { margin-left: 0.5em;  }
+.ml-3 { margin-left: 0.75em; }
+
+.mr-0 { margin-right: 0;      }
+.mr-1 { margin-right: 0.25em; }
+.mr-2 { margin-right: 0.5em;  }
+.mr-3 { margin-right: 0.75em; }
+
+.mx-0 { margin-right: 0;      margin-left: 0;      }
+.mx-1 { margin-right: 0.25em; margin-left: 0.25em; }
+.mx-2 { margin-right: 0.5em;  margin-left: 0.5em;  }
+.mx-3 { margin-right: 0.75em; margin-left: 0.75em; }
+
+/* Padding */
+
+.p-0 { padding: 0;      }
+.p-1 { padding: 0.25em; }
+.p-2 { padding: 0.5em;  }
+.p-3 { padding: 0.75em; }
+
+.pt-0 { padding-top: 0;      }
+.pt-1 { padding-top: 0.25em; }
+.pt-2 { padding-top: 0.5em;  }
+.pt-3 { padding-top: 0.75em; }
+
+.pb-0 { padding-bottom: 0;      }
+.pb-1 { padding-bottom: 0.25em; }
+.pb-2 { padding-bottom: 0.5em;  }
+.pb-3 { padding-bottom: 0.75em; }
+
+.py-0 { padding-top: 0;      padding-bottom: 0;      }
+.py-1 { padding-top: 0.25em; padding-bottom: 0.25em; }
+.py-2 { padding-top: 0.5em;  padding-bottom: 0.5em;  }
+.py-3 { padding-top: 0.75em; padding-bottom: 0.75em; }
+
+.pl-0 { padding-left: 0;      }
+.pl-1 { padding-left: 0.25em; }
+.pl-2 { padding-left: 0.5em;  }
+.pl-3 { padding-left: 0.75em; }
+
+.pr-0 { padding-right: 0;      }
+.pr-1 { padding-right: 0.25em; }
+.pr-2 { padding-right: 0.5em;  }
+.pr-3 { padding-right: 0.75em; }
+
+.px-0 { padding-right: 0;      padding-left: 0;      }
+.px-1 { padding-right: 0.25em; padding-left: 0.25em; }
+.px-2 { padding-right: 0.5em;  padding-left: 0.5em;  }
+.px-3 { padding-right: 0.75em; padding-left: 0.75em; }
+
+/* Flex */
+
+.flex { display: flex;          }
+.row  { flex-direction: row;    }
+.col  { flex-direction: column; }
+
+.fl-auto { flex-grow: auto; }
+.fl-1  { flex-grow: 1;  width: 0; }
+.fl-2  { flex-grow: 2;  width: 0; }
+.fl-3  { flex-grow: 3;  width: 0; }
+.fl-4  { flex-grow: 4;  width: 0; }
+.fl-5  { flex-grow: 5;  width: 0; }
+.fl-6  { flex-grow: 6;  width: 0; }
+.fl-7  { flex-grow: 7;  width: 0; }
+.fl-8  { flex-grow: 8;  width: 0; }
+.fl-9  { flex-grow: 9;  width: 0; }
+.fl-10 { flex-grow: 10; width: 0; }
+.fl-11 { flex-grow: 11; width: 0; }
+.fl-12 { flex-grow: 12; width: 0; }
+
+/* Alignment */
+
+.ai-start  { align-items: start;  }
+.ai-center { align-items: center; }
+.ai-end    { align-items: end;    }
+
+.just-start  { justify-content: start;  }
+.just-center { justify-content: center; }
+.just-end    { justify-content: end;    }
