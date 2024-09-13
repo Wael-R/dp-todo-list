@@ -101,8 +101,6 @@ function createTask(title, desc = "", checked = false, tags = [])
 	if(findTask(title))
 		return null;
 
-	// todo: create tag elements when loading
-
 	const task = $("#tmpTask").clone().attr("id", `task${taskIdx}`);
 	const taskObj = {element: task, title: title, desc: desc, checked: checked, displayed: true, tags: tags};
 
@@ -214,7 +212,8 @@ $("#taskSearchInput").on("change", (ev) => {
 	filterTasks();
 });
 
-$("#saveBtn").on("click", (ev) => {
+function getSaveObject()
+{
 	const tasksStr = [];
 	
 	tasks.forEach((task) => {
@@ -227,15 +226,11 @@ $("#saveBtn").on("click", (ev) => {
 		tagsStr.push({ title: tag.title, color: tag.color });
 	});
 
-	alert("Copiez ce texte dans un fichier :\n" + JSON.stringify({ tasks: tasksStr, tags: tagsStr }));
-});
+	return { tasks: tasksStr, tags: tagsStr };
+}
 
-$("#loadBtn").on("click", (ev) => {
-	let str = prompt("Copier votre fichier de sauvegarde ici :\n" + ((tasks.length > 0 || tags.length > 0) ? "(Ceci va supprimer les taches et étiquettes déjà éxistantes!)" : ""));
-
-	if(str == null)
-		return;
-
+function loadSaveObject(str)
+{
 	const save = JSON.parse(str);
 	const tasksStr = save.tasks;
 	const tagsStr = save.tags;
@@ -254,6 +249,64 @@ $("#loadBtn").on("click", (ev) => {
 
 	tagsStr.forEach((tag) => { createTag(tag.title, tag.color); });
 	tasksStr.forEach((task) => { createTask(task.title, task.desc, task.checked, task.tags); });
+}
+
+$("#saveBtn").on("click", (ev) => { alert("Copiez ce texte dans un fichier :\n" + JSON.stringify(getSaveObject())); });
+
+$("#loadBtn").on("click", (ev) => {
+	let str = prompt("Copier votre fichier de sauvegarde ici :\n" + ((tasks.length > 0 || tags.length > 0) ? "(Ceci va supprimer les taches et étiquettes déjà éxistantes!)" : ""));
+
+	if(str == null)
+		return;
+
+	loadSaveObject(str.trim());
+});
+
+$("#remoteSaveBtn").on("click", (ev) => {
+	let saveName = prompt("Indiquez le nom de la sauvegarde à créer :");
+
+	if(!saveName)
+		return;
+
+	if(saveName.trim() == "")
+	{
+		alert("Nom invalide.");
+		return;
+	}
+
+	const save = {
+		name: saveName.trim(),
+		data: getSaveObject()
+	};
+
+	httpRequest(
+		"task_save.php",
+		"POST",
+		(req) => { alert(`Taches sauvegardées en tant que '${saveName}'`); }, // success
+		(req) => { alert("Erreur lors de la sauvegarde : " + req.responseText); }, // fail
+		JSON.stringify(save),
+		[["Content-Type", "application/json"]]
+	);
+});
+
+$("#remoteLoadBtn").on("click", (ev) => {
+	let saveName = prompt("Nom de la sauvegarde à charger :\n" + ((tasks.length > 0 || tags.length > 0) ? "(Ceci va supprimer les taches et étiquettes déjà éxistantes!)" : ""));
+
+	if(!saveName)
+		return;
+
+	if(saveName.trim() == "")
+	{
+		alert("Nom invalide.");
+		return;
+	}
+
+	httpRequest(
+		"task_load.php?name=" + encodeURIComponent(saveName.trim()),
+		"GET",
+		(req) => { loadSaveObject(req.responseText); }, // success
+		(req) => { alert("Erreur lors du chargement : " + req.responseText); }, // fail
+	);
 });
 
 const newTaskModal = $("#newTaskModal");
