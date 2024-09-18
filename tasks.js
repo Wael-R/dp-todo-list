@@ -104,7 +104,7 @@ function createTask(title, desc = "", checked = false, tags = [])
 	const task = $("#tmpTask").clone().attr("id", `task${taskIdx}`);
 	const taskObj = {element: task, title: title, desc: desc, checked: checked, displayed: true, tags: tags};
 
-	$("[x-title]", task).text(title);
+	$("[data-title]", task).text(title);
 
 	taskIdx++;
 	$("#taskContainer").append(task);
@@ -121,18 +121,20 @@ function createTask(title, desc = "", checked = false, tags = [])
 			}
 
 			const label = createTagLabel(tag);
-			$("[x-tag-div]", task).append(label);
+			$("[data-tag-div]", task).append(label);
 		});
 	}
 
 	task.on("click", (ev2) => {
 		activeTask = taskObj;
 		activeTaskModal.removeClass("hidden");
-		$("[x-header]", activeTaskModal).text(title);
+		$("#currTaskHeader").text(title);
 		$("#currTaskTitle").val(activeTask.title);
 		$("#currTaskDesc").val(activeTask.desc);
 
-		let tagDiv = $("[x-tag-div]", activeTaskModal);
+		updateTaskDescBox();
+
+		let tagDiv = $("#currTaskTagDiv");
 		tagDiv.html("");
 
 		if(taskObj.tags.length > 0)
@@ -147,16 +149,16 @@ function createTask(title, desc = "", checked = false, tags = [])
 				}
 
 				const entry = $("#tmpTagList").clone().removeAttr("id");
-				$("[x-title]", entry).addClass(tagColors[tag.color]).text(tag.title);
+				$("[data-title]", entry).addClass(tagColors[tag.color]).text(tag.title);
 				entry.addClass("mb-2");
 
-				$("[x-add]", entry).remove();
+				$("[data-add]", entry).remove();
 				tagDiv.append(entry);
 
-				$("[x-delete]", entry).on("click", (ev3) => {
+				$("[data-delete]", entry).on("click", (ev3) => {
 					entry.remove();
 					taskObj.tags.splice(idx, 1);
-					$(`[x-tag-idx="${tag.idx}"]`, task).remove();
+					$(`[data-tag-idx="${tag.idx}"]`, task).remove();
 
 					if(taskObj.tags.length <= 0)
 						tagDiv.text("Aucune étiquette...");
@@ -167,29 +169,29 @@ function createTask(title, desc = "", checked = false, tags = [])
 			tagDiv.text("Aucune étiquette...");
 	});
 
-	$(task).on("click", "[x-check], [x-tag-div] *", (ev2) => { ev2.stopPropagation(); });
-	$(task).on("mouseenter", "[x-check], [x-tag-div] *", (ev2) => { task.addClass("no-select"); });
-	$(task).on("mouseleave", "[x-check], [x-tag-div] *", (ev2) => { task.removeClass("no-select"); });
+	$(task).on("click", "[data-check], [data-tag-div] *", (ev2) => { ev2.stopPropagation(); });
+	$(task).on("mouseenter", "[data-check], [data-tag-div] *", (ev2) => { task.addClass("no-select"); });
+	$(task).on("mouseleave", "[data-check], [data-tag-div] *", (ev2) => { task.removeClass("no-select"); });
 
-	$("[x-check]", task).on("change", (ev2) => {
+	$("[data-check]", task).on("change", (ev2) => {
 		taskObj.checked = ev2.target.checked;
 
 		if(taskObj.checked)
 		{
-			$("[x-title]", task).addClass("td-thru");
+			$("[data-title]", task).addClass("td-thru");
 			task.addClass("btn-dark").removeClass("btn-secondary");
 		}
 		else
 		{
-			$("[x-title]", task).removeClass("td-thru");
+			$("[data-title]", task).removeClass("td-thru");
 			task.removeClass("btn-dark").addClass("btn-secondary");
 		}
 	});
 
 	if(checked)
 	{
-		$("[x-check]", task)[0].checked = true;
-		$("[x-check]", task).trigger("change");
+		$("[data-check]", task)[0].checked = true;
+		$("[data-check]", task).trigger("change");
 	}
 
 	if(tasks.length > 0)
@@ -315,9 +317,9 @@ let activeTask = null;
 
 // * generic modal functions
 
-$("[x-modal]").on("click", (ev) => { // press modal cancel button when clicking outside the window
+$("[data-modal]").on("click", (ev) => { // press modal cancel button when clicking outside the window
 	ev.stopPropagation();
-	$("[x-cancel]", ev.target).click();
+	$("[data-cancel]", ev.target).click();
 }).children().on("click", (ev) => false); // only process clicks outside the modal
 
 // * new task modal functions
@@ -327,15 +329,15 @@ $("#newTaskBtn").on("click", (ev) => {
 	$("#newTaskTitle").trigger("focus");
 });
 
-$("#newTaskModal button[x-cancel]").on("click", (ev) => {
+$("#newTaskModal button[data-cancel]").on("click", (ev) => {
 	newTaskModal.addClass("hidden");
 	$("#newTaskTitle").val("");
-	$("[x-message]", newTaskModal).text("");
+	$("#newTaskMessage").text("");
 });
 
-$("#newTaskModal button[x-submit]").on("click", (ev) => {
+$("#newTaskCreateBtn").on("click", (ev) => {
 	const titleIn = $("#newTaskTitle");
-	const message = $("[x-message]", newTaskModal);
+	const message = $("#newTaskMessage");
 
 	const title = titleIn.val();
 
@@ -359,7 +361,7 @@ $("#newTaskModal button[x-submit]").on("click", (ev) => {
 
 $("#newTaskTitle").on("keydown", (ev) => {
 	if(ev.key == "Enter")
-		$("#newTaskModal button[x-submit]").click();
+		$("#newTaskCreateBtn").click();
 });
 
 // * current task modal functions
@@ -370,10 +372,10 @@ function closeTaskModal()
 	activeTaskModal.addClass("hidden");
 	$("#currTaskTitle").val("");
 	$("#currTaskDesc").val("");
-	$("[x-message]", activeTaskModal).text("");
+	$("#currTaskMessage").text("");
 }
 
-function updateTaskDeskBox()
+function updateTaskDescBox()
 {
 	const desc = $("#currTaskDesc");
 	const val = desc.val();
@@ -387,15 +389,15 @@ function updateTaskDeskBox()
 		desc.attr("rows", lines.length);
 }
 
-$("#currTaskModal button[x-cancel]").on("click", (ev) => {
+$("#currTaskCancelBtn").on("click", (ev) => {
 	closeTaskModal();
 });
 
-$("#currTaskModal button[x-submit]").on("click", (ev) => {
+$("#currTaskSaveBtn").on("click", (ev) => {
 	if(activeTask)
 	{
 		title = $("#currTaskTitle").val();
-		const message = $("[x-message]", activeTaskModal);
+		const message = $("#currTaskMessage");
 
 		if(title.trim().length <= 0)
 		{
@@ -409,14 +411,14 @@ $("#currTaskModal button[x-submit]").on("click", (ev) => {
 		}
 
 		activeTask.title = title;
-		$("[x-title]", activeTask.element).text(activeTask.title);
+		$("[data-title]", activeTask.element).text(activeTask.title);
 		activeTask.desc = $("#currTaskDesc").val();
 	}
 
 	closeTaskModal();
 });
 
-$("#currTaskModal button[x-delete]").on("click", (ev) => {
+$("#currTaskDeleteBtn").on("click", (ev) => {
 	if(activeTask)
 	{
 		activeTask.element.remove();
@@ -435,5 +437,5 @@ $("#currTaskDesc").on("change", (ev2) => {
 });
 
 $("#currTaskDesc").on("keydown keyup", (ev2) => {
-	updateTaskDeskBox();
+	updateTaskDescBox();
 });

@@ -36,8 +36,8 @@
 		</div>
 
 		<!-- New Task Modal -->
-		<div class="modal-container hidden" id="newTaskModal" x-modal>
-			<div class="modal-content" x-content>
+		<div class="modal-container hidden" id="newTaskModal" data-modal>
+			<div class="modal-content" data-content>
 				<h4 class="m-3">Nouvelle tache</h4>
 				<div class="flex col just-center p-3">
 					<div class="flex row ai-center">
@@ -45,17 +45,17 @@
 						<input class="btn btn-text ml-1 fl-2" type="text" id="newTaskTitle" placeholder="Nouvelle tache...">
 					</div>
 				</div>
-				<p class="px-3 my-1" x-message></p>
+				<p class="px-3 my-1" id="newTaskMessage"></p>
 				<div class="flex row just-end mb-3 pr-3">
-					<button class="btn" x-cancel>Annuler</button>
-					<button class="btn btn-blue ml-1" x-submit>Créer</button>
+					<button class="btn" id="newTaskCancelBtn" data-cancel>Annuler</button>
+					<button class="btn btn-blue ml-1" id="newTaskCreateBtn">Créer</button>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- New Tag Modal -->
-		<div class="modal-container hidden" id="newTagModal" x-modal>
-			<div class="modal-content" x-content>
+		<div class="modal-container hidden" id="newTagModal" data-modal>
+			<div class="modal-content" data-content>
 				<h4 class="m-3">Nouvelle étiquette</h4>
 				<div class="flex col just-center p-3">
 					<div class="flex row ai-center mb-3">
@@ -75,17 +75,17 @@
 						</select>
 					</div>
 				</div>
-				<p class="px-3 my-1" x-message></p>
+				<p class="px-3 my-1" id="newTagMessage"></p>
 				<div class="flex row just-end mb-3 pr-3">
-					<button class="btn" x-cancel>Annuler</button>
-					<button class="btn btn-blue ml-1" x-submit>Créer</button>
+					<button class="btn" id="newTagCancelBtn" data-cancel>Annuler</button>
+					<button class="btn btn-blue ml-1" id="newTagCreateBtn">Créer</button>
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Add Tag Modal -->
-		<div class="modal-container hidden" id="addTagModal" x-modal>
-			<div class="modal-content" x-content>
+		<div class="modal-container hidden" id="addTagModal" data-modal>
+			<div class="modal-content" data-content>
 				<h4 class="m-3">Ajouter une étiquette</h4>
 				<div class="flex col just-center p-3">
 					<div class="flex row ai-center mb-3">
@@ -95,18 +95,18 @@
 						</select>
 					</div>
 				</div>
-				<p class="px-3 my-1" x-message></p>
+				<p class="px-3 my-1" id="addTagMessage"></p>
 				<div class="flex row just-end mb-3 pr-3">
-					<button class="btn" x-cancel>Annuler</button>
-					<button class="btn btn-blue ml-1" x-submit>Ajouter</button>
+					<button class="btn" id="addTagCancelBtn" data-cancel>Annuler</button>
+					<button class="btn btn-blue ml-1" id="addTagAddBtn">Ajouter</button>
 				</div>
 			</div>
 		</div>
 
 		<!-- Task Details Modal -->
-		<div class="modal-container hidden" id="currTaskModal" x-modal>
-			<div class="modal-content" x-content>
-				<h4 class="m-3" x-header>Nouvelle tache</h4>
+		<div class="modal-container hidden" id="currTaskModal" data-modal>
+			<div class="modal-content" data-content>
+				<h4 class="m-3" id="currTaskHeader">Nouvelle tache</h4>
 				<div class="flex col just-center p-3">
 					<div class="flex row ai-center mb-3">
 						<label class="fl-1" for="currTaskTitle">Titre</label>
@@ -118,15 +118,15 @@
 					</div>
 					<div class="flex row ai-start">
 						<label class="fl-1" for="currTaskDesc">Étiquettes</label>
-						<div class="flex col fl-3" x-tag-div>
+						<div class="flex col fl-3" id="currTaskTagDiv">
 						</div>
 					</div>
 				</div>
-				<p class="px-3 my-1" x-message></p>
+				<p class="px-3 my-1" id="currTaskMessage"></p>
 				<div class="flex row just-end mb-3 pr-3">
-					<button class="btn" x-cancel>Annuler</button>
-					<button class="btn btn-red ml-1" x-delete>Supprimer</button>
-					<button class="btn btn-blue ml-1" x-submit>Sauvegarder</button>
+					<button class="btn" id="currTaskCancelBtn" data-cancel>Annuler</button>
+					<button class="btn btn-red ml-1" id="currTaskDeleteBtn">Supprimer</button>
+					<button class="btn btn-blue ml-1" id="currTaskSaveBtn">Sauvegarder</button>
 				</div>
 			</div>
 		</div>
@@ -134,18 +134,18 @@
 		<div class="hidden">
 			<div class="btn p-2 flex ai-center" id="tmpTask">
 				<div class="fl-1 flex ai-center">
-					<input type="checkbox" class="mr-2 check" x-check>
-					<h4 class="m-0 fw-bold" x-title>Task Title</h4>
+					<input type="checkbox" class="mr-2 check" data-check>
+					<h4 class="m-0 fw-bold" data-title>Task Title</h4>
 				</div>
-				<div class="fl-1 flex ai-center just-end" x-tag-div>
+				<div class="fl-auto flex ai-center just-end" data-tag-div>
 
 				</div>
 			</div>
 			<span class="btn p-1 fs-12 ml-2" id="tmpTag">Tag Name</span>
 			<div class="flex row" id="tmpTagList">
-				<span class="btn p-1 fs-12 fl-1" x-title>Tag Name</span>
-				<span class="btn btn-blue ml-1 p-1 px-2 fs-12" x-add>+</span>
-				<span class="btn btn-red ml-1 p-1 px-1 fs-12" x-delete>x</span>
+				<span class="btn p-1 fs-12 fl-1" data-title>Tag Name</span>
+				<span class="btn btn-blue ml-1 p-1 px-2 fs-12" data-add>+</span>
+				<span class="btn btn-red ml-1 p-1 px-1 fs-12" data-delete>x</span>
 			</div>
 			<option id="tmpOption"></option>
 		</div>

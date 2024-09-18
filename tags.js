@@ -45,18 +45,18 @@ function createTag(title, color = 0)
 	const tag = $("#tmpTagList").clone().attr("id", `tag${tagIdx}`);
 	const tagObj = {element: tag, title: title, color: color, idx: tagIdx};
 
-	$("[x-title]", tag).text(title).addClass(tagColors[color]);
+	$("[data-title]", tag).text(title).addClass(tagColors[color]);
 
 	tagIdx++;
 	$("#tagContainer").append(tag);
 
-	$("[x-title]", tag).on("click", (ev2) => {
+	$("[data-title]", tag).on("click", (ev2) => {
 		let idx = activeTags.indexOf(tagObj);
 
 		if(idx >= 0)
 		{
 			activeTags.splice(idx, 1);
-			$("[x-title]", tag).removeClass("fw-bold td-under");
+			$("[data-title]", tag).removeClass("fw-bold td-under");
 
 			if(activeTags.length <= 0)
 				$("#tagFilterBtn").addClass("hidden");
@@ -65,13 +65,13 @@ function createTag(title, color = 0)
 		{
 			activeTags.push(tagObj);
 			$("#tagFilterBtn").removeClass("hidden");
-			$("[x-title]", tag).addClass("fw-bold td-under");
+			$("[data-title]", tag).addClass("fw-bold td-under");
 		}
 
 		filterTasks();
 	});
 
-	$("[x-add]", tag).on("click", (ev2) => {
+	$("[data-add]", tag).on("click", (ev2) => {
 		activeTag = tagObj;
 		addTagModal.removeClass("hidden");
 		$("#addTagTarget").children().remove();
@@ -90,7 +90,7 @@ function createTag(title, color = 0)
 		$("#addTagTarget").trigger("focus").val("");
 	});
 
-	$("[x-delete]", tag).on("click", (ev2) => {
+	$("[data-delete]", tag).on("click", (ev2) => {
 		tag.remove();
 
 		tasks.forEach((task) => {
@@ -99,7 +99,7 @@ function createTag(title, color = 0)
 			if(idx >= 0)
 			{
 				task.tags.splice(idx, 1);
-				$(`[x-tag-idx="${tagObj.idx}"]`, task.element).remove();
+				$(`[data-tag-idx="${tagObj.idx}"]`, task.element).remove();
 			}
 		});
 
@@ -130,11 +130,11 @@ function createTag(title, color = 0)
 function createTagLabel(tag)
 {
 	const idx = tag.idx;
-	const elem = $("#tmpTag").clone().removeAttr("id").attr("x-tag-idx", idx);
+	const elem = $("#tmpTag").clone().removeAttr("id").attr("data-tag-idx", idx);
 	elem.addClass(tagColors[tag.color]).text(tag.title);
 
 	elem.on("click", (ev2) => {
-		$(`#tag${idx} [x-title]`).click();
+		$(`#tag${idx} [data-title]`).click();
 	});
 
 	return elem;
@@ -142,7 +142,7 @@ function createTagLabel(tag)
 
 $("#tagFilterBtn").on("click", (ev) => {
 	$("#tagFilterBtn").addClass("hidden");
-	$("#tagContainer [x-title]").removeClass("fw-bold td-under");
+	$("#tagContainer [data-title]").removeClass("fw-bold td-under");
 	activeTags.length = 0;
 	filterTasks();
 });
@@ -154,16 +154,16 @@ $("#newTagBtn").on("click", (ev) => {
 	$("#newTagTitle").trigger("focus");
 });
 
-$("#newTagModal button[x-cancel]").on("click", (ev) => {
+$("#newTagCancelBtn").on("click", (ev) => {
 	newTagModal.addClass("hidden");
 	$("#newTagTitle").val("");
-	$("[x-message]", newTagModal).text("");
+	$("#newTagMessage").text("");
 });
 
-$("#newTagModal button[x-submit]").on("click", (ev) => {
+$("#newTagCreateBtn").on("click", (ev) => {
 	const titleIn = $("#newTagTitle");
 	const colorIn = $("#newTagColor");
-	const message = $("[x-message]", newTagModal);
+	const message = $("#newTagMessage");
 
 	const title = titleIn.val();
 	const color = colorIn.val();
@@ -188,19 +188,19 @@ $("#newTagModal button[x-submit]").on("click", (ev) => {
 
 $("#newTagTitle").on("keydown", (ev) => {
 	if(ev.key == "Enter")
-		$("#newTagModal button[x-submit]").click();
+		$("#newTagCreateBtn").click();
 });
 
 // * add tag modal functions
 
-$("#addTagModal button[x-cancel]").on("click", (ev) => {
+$("#addTagCancelBtn").on("click", (ev) => {
 	addTagModal.addClass("hidden");
-	$("[x-message]", addTagModal).text("");
+	$("#addTagMessage").text("");
 });
 
-$("#addTagModal button[x-submit]").on("click", (ev) => {
+$("#addTagAddBtn").on("click", (ev) => {
 	const targetIn = $("#addTagTarget");
-	const message = $("[x-message]", addTagModal);
+	const message = $("#addTagMessage");
 	const task = findTask(targetIn.val());
 
 	if(!task)
@@ -214,18 +214,10 @@ $("#addTagModal button[x-submit]").on("click", (ev) => {
 		return;
 	}
 
-	// const tag = $("#tmpTag").clone().removeAttr("id").attr("x-tag-idx", activeTag.idx);
-	// tag.addClass(tagColors[activeTag.color]).text(activeTag.title);
-
 	const tag = createTagLabel(activeTag);
 
-	// const idx = activeTag.idx;
-	// tag.on("click", (ev2) => {
-	// 	$(`#tag${idx} [x-title]`).click();
-	// });
-
 	task.tags.push(activeTag.title);
-	$("[x-tag-div]", task.element).append(tag);
+	$("[data-tag-div]", task.element).append(tag);
 
 	addTagModal.addClass("hidden");
 	message.text("");
